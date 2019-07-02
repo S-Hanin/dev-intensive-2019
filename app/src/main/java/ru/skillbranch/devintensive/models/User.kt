@@ -35,5 +35,4 @@ data class User(
             return User(id="$lastId", firstName =firstName, lastName=lastName)
         }
     }
-
 }

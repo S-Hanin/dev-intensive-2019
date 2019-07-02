@@ -1,8 +1,4 @@
-package ru.skillbranch.devintensive.Utils
-
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.concurrent.TimeUnit
+package ru.skillbranch.devintensive.utils
 
 
 fun parseFullName(fullName: String?):Pair<String?, String?>{
@@ -26,30 +22,8 @@ fun toInitials(firstName: String?, lastName: String?): String?{
 }
 
 
-fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"):String{
-    return SimpleDateFormat(pattern, Locale("ru")).format(this)
-}
-
-
-enum class TimeUnits {
-SECOND, MINUTE, HOUR, DAY
-}
-
-fun Date.add(value: Int, Units: TimeUnits):Date {
-    val cal = Calendar.getInstance()
-    cal.time = this
-    when (Units){
-        TimeUnits.SECOND -> cal.add(Calendar.SECOND, value)
-        TimeUnits.MINUTE -> cal.add(Calendar.MINUTE, value)
-        TimeUnits.HOUR -> cal.add(Calendar.HOUR, value)
-        TimeUnits.DAY -> cal.add(Calendar.DATE, 1)
-    }
-    return cal.time
-}
-
-
 fun transliteration(payload: String, divider: String = " "):String{
-    var pairs = mapOf<String, String>(
+    val pairs = mapOf(
         "а" to "a", "б" to "b", "в" to "v", "г" to "g",
         "д" to "d", "е" to "e", "ё" to "e", "ж" to "zh",
         "з" to "z", "и" to "i", "й" to "i", "к" to "k",
@@ -60,7 +34,12 @@ fun transliteration(payload: String, divider: String = " "):String{
         "ы" to "i", "ь" to "", "э" to "e", "ю" to "yu",
         "я" to "ya", " " to divider)
 
-    for (item in payload){}
-
-    return ""
+    val builder = StringBuilder()
+    for (item in payload){
+        builder.append(
+                if (pairs.containsKey(item.toString())) pairs[item.toString()]
+                else item.toString()
+        )
+    }
+    return builder.toString()
 }
