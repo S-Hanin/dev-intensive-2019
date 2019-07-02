@@ -23,3 +23,23 @@ fun Date.add(value: Int, Units: TimeUnits): Date {
     }
     return cal.time
 }
+
+
+fun Date.humanizeDiff(date: Date = Date()): String{
+    val diff = (this.time - date.time) / 1000
+    val result: String
+    when {
+        diff in 0..1 -> result = "только что"
+        diff in 1..45 -> result = "несколько секунд назад"
+        diff in 45..75 -> result = "минуту назад"
+        diff in 75..45*60 -> result = "${diff/60} минут назад"
+        diff in 45*60..75*60 -> result = "час назад"
+        diff in 75*60..22*3600 -> result = "${diff/60/60} часов назад"
+        diff in 22*3600..26*3600 -> result = "день назад"
+        diff in 26*3600..360*24*3600 -> result = "${diff/60/60/24} дней назад"
+        diff > 360*24*3600 -> result = "более года назад"
+        else -> result = ""
+    }
+
+    return result
+}
