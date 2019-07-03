@@ -1,5 +1,4 @@
 package ru.skillbranch.devintensive.models
-
 import java.util.*
 
 
@@ -11,10 +10,13 @@ abstract class BaseMessage (
     val date: Date = Date()
 ) {
     abstract fun formatMessage(): String
-    fun makeMessage(from: User, chat: Chat, date: Date, type: String, payload: String, isIncoming: Boolean = false) =
-        when (type){
-            "text" -> TextMessage("1", from, chat, isIncoming, date, payload)
-            "image" -> ImageMessage("1", from, chat, isIncoming, date, payload)
-            else -> null
-        }
+
+    companion object Factory{
+        fun makeMessage(from: User, chat: Chat, date: Date, payload: String, type: String, isIncoming: Boolean = false) =
+            when (type){
+                "text" -> TextMessage("1", from, chat, isIncoming, date, payload)
+                "image" -> ImageMessage("1", from, chat, isIncoming, date, payload)
+                else -> TextMessage("1", from, chat, isIncoming, date, payload)
+            }
+    }
 }
