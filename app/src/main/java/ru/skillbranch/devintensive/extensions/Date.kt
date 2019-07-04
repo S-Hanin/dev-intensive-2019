@@ -12,7 +12,7 @@ fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"):String{
 enum class TimeUnits {
     SECOND{
         override fun plural(num: Int): String {
-            return pluralForm(num, arrayOf("секунду", "секунды", "секунд"))
+            return pluralForm(num, arrayOf("секунда", "секунды", "секунд"))
         }
     }, MINUTE{
         override fun plural(num: Int): String {
