@@ -12,7 +12,7 @@ abstract class BaseMessage (
     abstract fun formatMessage(): String
 
     companion object Factory{
-        fun makeMessage(from: User, chat: Chat, date: Date, payload: String, type: String, isIncoming: Boolean = false) =
+        fun makeMessage(from: User, chat: Chat, date: Date, type: String, payload: String, isIncoming: Boolean = false) =
             when (type){
                 "text" -> TextMessage("1", from, chat, isIncoming, date, payload)
                 "image" -> ImageMessage("1", from, chat, isIncoming, date, payload)

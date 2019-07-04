@@ -22,10 +22,10 @@ class ExampleUnitTest {
     @Test
     fun test_makeMessage() {
         assertEquals("Василий отправил сообщение \"any text message\" только что",
-                BaseMessage.makeMessage(User.makeUser("Василий"), Chat("1"), Date(), "any text message", "text").formatMessage())
+                BaseMessage.makeMessage(User.makeUser("Василий"), Chat("1"), Date(),"text", "any text message").formatMessage())
         assertEquals("Василий получил изображение \"https://anyurl.com\" 2 часа назад",
                 BaseMessage.makeMessage(User.makeUser("Василий"), Chat("1"), Date().add(-2, TimeUnits.HOUR),
-                        "https://anyurl.com", "image", true).formatMessage())
+                        "image", "https://anyurl.com", true).formatMessage())
     }
 
     @Test
@@ -62,10 +62,13 @@ class ExampleUnitTest {
 
     @Test
     fun test_plural() {
-        assertEquals("1 секунда", TimeUnits.SECOND.plural(1))
+        assertEquals("1 секунду", TimeUnits.SECOND.plural(1))
         assertEquals("2 секунды", TimeUnits.SECOND.plural(2))
         assertEquals("5 секунд", TimeUnits.SECOND.plural(5))
-        assertEquals("1 минута", TimeUnits.MINUTE.plural(1))
+        assertEquals("11 секунд", TimeUnits.SECOND.plural(11))
+        assertEquals("12 секунд", TimeUnits.SECOND.plural(12))
+        assertEquals("21 секунду", TimeUnits.SECOND.plural(21))
+        assertEquals("1 минуту", TimeUnits.MINUTE.plural(1))
         assertEquals("2 минуты", TimeUnits.MINUTE.plural(2))
         assertEquals("5 минут", TimeUnits.MINUTE.plural(5))
         assertEquals("1 час", TimeUnits.HOUR.plural(1))
