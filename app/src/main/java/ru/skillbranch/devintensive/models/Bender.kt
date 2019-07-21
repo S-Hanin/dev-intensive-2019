@@ -13,7 +13,11 @@ class Bender(var status:Status = Status.NORMAL, var question: Question = Questio
     }
 
     fun listenAnswer(answer:String):Pair<String, Triple<Int, Int, Int>> {
-        return if (question.answers.contains(answer)) {
+        val validation = validate(question, answer)
+        if (!validation.first){
+            return "${validation.second}\n${question.question}" to status.color
+        }
+        return if (question.answers.contains(answer.toLowerCase())) {
             question = question.nextQuestion()
             "Отлично - ты справился\n${question.question}" to status.color
         } else {
@@ -21,10 +25,21 @@ class Bender(var status:Status = Status.NORMAL, var question: Question = Questio
             if (status == Status.CRITICAL) {
                 question = Question.NAME
                 status = Status.NORMAL
-                "Это не правильный ответ. Давай все по новой\n${question.question}" to status.color
+                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
             } else {
-                "Это не правильный ответ\n${question.question}" to status.color
+                "Это неправильный ответ\n${question.question}" to status.color
             }
+        }
+    }
+
+    private fun validate(question: Question, answer: String):Pair<Boolean, String>{
+        return when (question) {
+            Question.NAME -> (answer.capitalize() == answer) to "Имя должно начинаться с заглавной буквы"
+            Question.PROFESSION -> (answer.toLowerCase() == answer) to "Профессия должна начинаться со строчной буквы"
+            Question.MATERIAL -> (!answer.contains(Regex("\\d"))) to "Материал не должен содержать цифр"
+            Question.BDAY -> (!answer.contains(Regex("\\D"))) to "Год моего рождения должен содержать только цифры"
+            Question.SERIAL -> (!answer.contains(Regex("\\D")) && answer.length == 7) to "Серийный номер содержит только цифры, и их 7"
+            Question.IDLE -> false to ""
         }
     }
 
